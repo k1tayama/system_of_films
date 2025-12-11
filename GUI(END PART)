@@ -187,7 +187,9 @@ class DataManager:
         else:
             self._users[user._id] = user
 
-    # Новый метод для получения пользователя по имени
+
+
+
     def get_user_by_name(self, user_name: str):
         for user in self._users.values():
             if user.user_name == user_name:
