@@ -187,16 +187,14 @@ class DataManager:
         else:
             self._users[user._id] = user
 
-
-
-
+    # Новый метод для получения пользователя по имени(Для регистрации)
     def get_user_by_name(self, user_name: str):
         for user in self._users.values():
             if user.user_name == user_name:
                 return user
         return None
 
-    def load_sample_data(self):
+    def load_data(self):
         sample_films = [
             Film(1, "Inception", [Genres.ACTION, Genres.THRILLER], "Nolan", 2010, 8.8),
             Film(2, "Titanic", [Genres.DRAMA, Genres.ROMANCE], "Cameron", 1997, 7.8),
@@ -232,19 +230,6 @@ class DataManager:
         for f in sample_films:
          self.add_film(f)
 
-        user1 = User(1, "Alice", preferred_genres=[Genres.ACTION, Genres.ADVENTURE])
-        user2 = User(2, "Walter", preferred_genres=[Genres.DRAMA, Genres.ROMANCE])
-        user3 = User(3, "Jimmy", preferred_genres=[Genres.ANIMATION, Genres.FAMILY])
-
-        self.add_user(user1)
-        self.add_user(user2)
-        self.add_user(user3)
-
-        user1.add_watched_film(sample_films[3], 8.5)
-        user2.add_watched_film(sample_films[1], 7.8)
-        user2.add_watched_film(sample_films[9], 8.8)
-        user3.add_watched_film(sample_films[2], 8.5)
-        user3.add_watched_film(sample_films[5], 7.5)
 
 # БЛОК 2
 
@@ -385,7 +370,7 @@ class RecommendationService:
 class ConsoleInterface:
     def __init__(self):
         self.data_manager = DataManager()
-        self.data_manager.load_sample_data()
+        self.data_manager.load_data()
         self.recommendation_service = RecommendationService()
         self.current_user = None
 
@@ -545,7 +530,7 @@ class ConsoleInterface:
                 print(film)
                 # Проверка на просмотренность
                 if film in self.current_user.watched_films:
-                    print(f"  Ваша оценка: {self.current_user.get_rating(film)}")
+                    print(f"Ваша оценка: {self.current_user.get_rating(film)}")
                 print()
 
     def rate_film(self):
@@ -623,4 +608,3 @@ class ConsoleInterface:
 if __name__ == "__main__":
     app = ConsoleInterface()
     app.run()
-
